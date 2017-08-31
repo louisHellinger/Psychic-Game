@@ -1,80 +1,108 @@
 //prompt("Guess what letter I'm thinking of?")
-
-var letterChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+$(document).ready(function(){
 
 var wins = 0;
 var losses = 0;
-var guessCounter = 4;
+var guessCounter = 5;
 var guessList = [];
-var guessList2 = [];
-
-function loadText () {
-	var html = "<h1>The Psychic Game</h1><p><br>Guess what letter I am thinking of?" + "<br>WINS: " + wins + "<br>LOSSES: " + losses + "<br>Guesses Left: " + guessCounter + "<br>Your guesses so far:" + "<br>" + "</p>";
-	document.querySelector(".textBody").innerHTML = html;
-	document.querySelector(".guesses").innerHTML = guessList2;
-
-	}
+var guessList2 = [0];
+var computerGuess = [];
+var letterChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 
 
-loadText();
 
-function winner() {
-	wins++;
-	console.log("wins " + wins);
-	loadText();
 
-}
+function resetGame() {
+guessList2 = [];
+guessCounter = 5;
+console.log("GAME RESET ::: Current computer guess " + computerGuess);
 
-function loser () {
-	losses++;
-	console.log("losses " + losses)
-	loadText();
-}
+};
 
+
+	document.querySelector(".winsText").innerHTML = "WINS: " + wins;
+	document.querySelector(".lossesText").innerHTML = "LOSSES: " + losses;
+	document.querySelector(".guessCount").innerHTML = "GUESSES REMAINING: " + guessCounter;
 	
-// LOOP for guess counter
-for (var i = 4; i > 0; --i) {
-	
-document.onkeyup = function(event) {
- // Determines which key was pressed. 
-  var userGuess = event.key;
 
-  if (guessList2.indexOf(userGuess) > -1) {
-	alert('already selected');
 
-} else if (letterChoices.indexOf(userGuess) === -1){
-   alert("not a letter");
+	document.querySelector(".guesses").innerHTML = guessList2.join(" ");
 
-} else if (letterChoices.indexOf(userGuess) > -1) {
-    guessList2.push(userGuess);
-    guessCounter = i;
+	console.log(guessList2);
 
-}
+
+var computerGuess = letterChoices[Math.floor(Math.random() * letterChoices.length)];
+
+console.log("GAME RESET ::: Current computer guess " + computerGuess);
+
+
+					document.onkeyup = function(event) {		
+						var userGuess = event.key; 
+						
+
+						if (userGuess === computerGuess) {
+							wins = wins + 1;
+							document.querySelector(".winsText").innerHTML = "WINS: " + wins;
+
+							console.log('you win-----');
+						}
+							else if (guessCounter > 0){
+								guessCounter = guessCounter - 1;
+								console.log("GUESS COUNTER " + guessCounter);
+								document.querySelector(".guessCount").innerHTML = "GUESSES REMAINING: " + guessCounter;
+								
+						} else if (guessCounter === 0) {
+							losses = losses + 1;
+							document.querySelector(".lossesText").innerHTML = "LOSSES: " + losses;
+							console.log("reset game");
+							resetGame();
+
+						}
+
+					
+
+						
+					}
+
+
+  // LOSSES TEXT WORKING 
+ 
+
+
+
+// if (guessList2.indexOf(userGuess) > -1) {
+
+// 				alert('already selected');
+
+
+// 			} else if (letterChoices.indexOf(userGuess) > -1) {
+
+// 							guessList2.push(userGuess);
+		
+// 				if (userGuess === computerGuess) {
+// 									winner();
+									 
+// 						} else if (guessList2.length === 9) {
+// 							guessList2 = [];
+// 							guessCounter = 9;
+// 							losses++;
+							
+// 						} else {
+
+// 					guessCounter = guessCounter -1;
+
+// 					}
+// 					}
 
 // pushes pressed key to GUESS LIST
  
-  //guessCounter = i;
- 
 // sets up computer logic to 
- //var computerGuess = letterChoices[Math.floor(Math.random() * letterChoices.length)];
-
-var computerGuess = "b";
-
-if (userGuess === computerGuess) {
-
-	winner();
-	
-} else  {
-	loser();
+//var computerGuess = letterChoices[Math.floor(Math.random() * letterChoices.length)];
 
 
-	
-}
-
-loadText();
-}
+});
 
 
 
 
-}
+
