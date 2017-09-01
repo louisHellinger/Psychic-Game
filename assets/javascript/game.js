@@ -20,8 +20,12 @@ console.log("GAME RESET ::: Current computer guess " + computerGuess);
 };
 
 function buildList(theLetter){
-			guessList2.push(theLetter);
+			if (guessList2.indexOf(theLetter) === -1) {
+				guessList2.push(theLetter);
 			document.querySelector(".guesses").innerHTML = guessList2.join("");
+			} else if (guessList2.indexOf(theLetter) > -1){
+					console.log("you have used this already");
+			}
 
 };
 
@@ -37,16 +41,11 @@ function buildList(theLetter){
 var computerGuess = letterChoices[Math.floor(Math.random() * letterChoices.length)];
 console.log ("this is the Computer Guess:  " + computerGuess);
 
-			document.onkeyup = function(event) {		
+			document.onkeyup = function(event) {
 				var userGuess = event.key;
 
-						if (guessList2.indexOf(userGuess) > -1) {
+						 buildList(userGuess);
 						
-						 		buildList(userGuess);
-						}
-						
-					
-					
 						if (userGuess === computerGuess) {
 							wins = wins + 1;
 							document.querySelector(".winsText").innerHTML = "WINS: " + wins;
