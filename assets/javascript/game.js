@@ -1,11 +1,11 @@
 //prompt("Guess what letter I'm thinking of?")
-$(document).ready(function(){
+
 
 var wins = 0;
 var losses = 0;
-var guessCounter = 5;
+var guessCounter = 4;
 var guessList = [];
-var guessList2 = [0];
+var guessList2 = [];
 var computerGuess = [];
 var letterChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 
@@ -14,42 +14,50 @@ var letterChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o"
 
 function resetGame() {
 guessList2 = [];
-guessCounter = 5;
+guessCounter = 4;
 console.log("GAME RESET ::: Current computer guess " + computerGuess);
 
 };
 
+function buildList(theLetter){
+			guessList2.push(theLetter);
+			document.querySelector(".guesses").innerHTML = guessList2.join("");
 
-	document.querySelector(".winsText").innerHTML = "WINS: " + wins;
-	document.querySelector(".lossesText").innerHTML = "LOSSES: " + losses;
-	document.querySelector(".guessCount").innerHTML = "GUESSES REMAINING: " + guessCounter;
+};
+
+	// document.querySelector(".winsText").innerHTML = "WINS: " + wins;
+	// document.querySelector(".lossesText").innerHTML = "LOSSES: " + losses;
+	// document.querySelector(".guessCount").innerHTML = "GUESSES REMAINING: " + guessCounter;
+
+
 	
 
 
-	document.querySelector(".guesses").innerHTML = guessList2.join(" ");
-
-	console.log(guessList2);
-
 
 var computerGuess = letterChoices[Math.floor(Math.random() * letterChoices.length)];
+console.log ("this is the Computer Guess:  " + computerGuess);
 
-console.log("GAME RESET ::: Current computer guess " + computerGuess);
+			document.onkeyup = function(event) {		
+				var userGuess = event.key;
 
-
-					document.onkeyup = function(event) {		
-						var userGuess = event.key; 
+						if (guessList2.indexOf(userGuess) > -1) {
 						
-
+						 		buildList(userGuess);
+						}
+						
+					
+					
 						if (userGuess === computerGuess) {
 							wins = wins + 1;
 							document.querySelector(".winsText").innerHTML = "WINS: " + wins;
-
-							console.log('you win-----');
+						
+							
 						}
 							else if (guessCounter > 0){
 								guessCounter = guessCounter - 1;
 								console.log("GUESS COUNTER " + guessCounter);
 								document.querySelector(".guessCount").innerHTML = "GUESSES REMAINING: " + guessCounter;
+								
 								
 						} else if (guessCounter === 0) {
 							losses = losses + 1;
@@ -65,11 +73,11 @@ console.log("GAME RESET ::: Current computer guess " + computerGuess);
 					}
 
 
-  // LOSSES TEXT WORKING 
+
  
 
 
-
+////document.querySelector(".guesses").innerHTML = guessList2.push(userGuess);
 // if (guessList2.indexOf(userGuess) > -1) {
 
 // 				alert('already selected');
@@ -100,7 +108,7 @@ console.log("GAME RESET ::: Current computer guess " + computerGuess);
 //var computerGuess = letterChoices[Math.floor(Math.random() * letterChoices.length)];
 
 
-});
+
 
 
 
