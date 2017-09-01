@@ -3,7 +3,7 @@
 
 var wins = 0;
 var losses = 0;
-var guessCounter = 4;
+var guessCounter = 9;
 var guessList = [];
 var guessList2 = [];
 var computerGuess = [];
@@ -11,18 +11,37 @@ var letterChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o"
 
 
 
+function updateUsedList(){
+	document.querySelector(".guesses").innerHTML = guessList2.join("");
+}
+
+function resetCounter () {
+		guessCounter = 9;
+
+		document.querySelector(".guessCount").innerHTML = "GUESSES REMAINING: " + guessCounter;
+
+
+}
 
 function resetGame() {
-guessList2 = [];
-guessCounter = 4;
-console.log("GAME RESET ::: Current computer guess " + computerGuess);
-
+		guessList2 = [""];
+		resetCounter();
+		updateUsedList();
+		
 };
+
 
 function buildList(theLetter){
 			if (guessList2.indexOf(theLetter) === -1) {
 				guessList2.push(theLetter);
-			document.querySelector(".guesses").innerHTML = guessList2.join("");
+				updateUsedList();
+
+			//document.querySelector(".guesses").innerHTML = guessList2.join("");
+
+			guessCounter --;
+
+			document.querySelector(".guessCount").innerHTML = "GUESSES REMAINING: " + guessCounter;
+
 			} else if (guessList2.indexOf(theLetter) > -1){
 					console.log("you have used this already");
 			}
@@ -43,33 +62,46 @@ console.log ("this is the Computer Guess:  " + computerGuess);
 
 			document.onkeyup = function(event) {
 				var userGuess = event.key;
-
-						 buildList(userGuess);
-						
+			
 						if (userGuess === computerGuess) {
 							wins = wins + 1;
 							document.querySelector(".winsText").innerHTML = "WINS: " + wins;
+							resetGame();
 						
 							
-						}
-							else if (guessCounter > 0){
-								guessCounter = guessCounter - 1;
-								console.log("GUESS COUNTER " + guessCounter);
-								document.querySelector(".guessCount").innerHTML = "GUESSES REMAINING: " + guessCounter;
-								
-								
-						} else if (guessCounter === 0) {
-							losses = losses + 1;
+						} else if (guessCounter === 1) {
+							losses ++
 							document.querySelector(".lossesText").innerHTML = "LOSSES: " + losses;
-							console.log("reset game");
 							resetGame();
 
 						}
 
+
+						else { 
+
+							buildList(userGuess); 
+
+						}
+					};
+
+
+					// 		else if (guessCounter > 0){
+								
+					// 	}
+								
+								
+					// 	} else if (guessCounter === 0) {
+					// 		losses = losses + 1;
+					// 		document.querySelector(".lossesText").innerHTML = "LOSSES: " + losses;
+					// 		console.log("reset game");
+					// 		resetGame();
+
+					// 	}
+
 					
 
 						
-					}
+					// }
 
 
 
